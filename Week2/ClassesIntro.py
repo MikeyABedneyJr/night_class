@@ -23,7 +23,7 @@ class Pet(object):
 
 	def __init__(self, name, species)
 			def __init__(self, name, species):
-							#mothod is just a function side a clss.
+							#method is just a function side a class.
 			def ___str__(self):
 				return "%s is a %s" % (self.name, self.species)
 
