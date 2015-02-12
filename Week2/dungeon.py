@@ -57,26 +57,42 @@ def battle_success():
 	char.opponents_beaten += 1
 	current_stats()
 
-def battle_failure():
-	print "Well, that didn't work. What now?"
-	battle()
+def battle_failure(char, challenge):
+	print "Oh nooo!! It didn't work!!"
+	current_stats()
+	battle(char, challenge)
 
 def battle(char, challenge):
-	print "How do you plan to bypass this {}?\n".format(challenge)
+	print "How do you plan to bypass this {}?\n".format(challenge.name)
 	battle_menu()
-	battle_choice = raw_input("What will you do?")
-	if battle_choice == "1":
+	battle_choice = raw_input("What will you do?:  "  )
+	if battle_choice == "1":		#Player tries to run
 		player_roll = random.randint(0,100)
 		print player_roll
 		if player_roll <= challenge.energy:
 			battle_success()
+			char.energy -= 1
 		if challenge.energy <= player_roll:
 			char.energy -= 2
-			battle_failure()
-
-
-
-
+			battle_failure(char, challenge)
+	if battle_choice == "2":		#Player uses patience
+		player_roll = random.randint(0,100)
+		print player_roll
+		if player_roll <= challenge.patience:
+			battle_success()
+			char.patience -= 1
+		if challenge.patience <= player_roll:
+			char.patience -= 2
+			battle_failure(char, challenge)
+	if battle_choice == "3":		#Player tries to make up an excuse
+		player_roll = random.randint(0,100)
+		print player_roll
+		if player_roll <= challenge.excuse_detection:
+			battle_success()
+			char.excuses -= 1
+		if challenge.excuse_detection <= player_roll:
+			char.excuses -= 1
+			battle_failure(char, challenge)
 
 def current_stats():	#Called when needing to display current teacher status
 	print '''
@@ -130,7 +146,7 @@ char_name = raw_input("What is your teacher/player's name?: ")
 char = Player(char_name, 7, 7, 7, 0)
 char.description()
 
-#Generate 4 types of opponents
+#Generate 4 types of opponents.  Stats are ordered as: energy, patience, excuse_detection
 studentOpp = Opponent("student", 40, 90, 80)
 parentOpp = Opponent("parent", 20, 80, 60)
 coworkerOpp = Opponent("coworker", 90, 50, 50)
@@ -149,11 +165,8 @@ open the door and take your first steps toward the exit...'''
 
 hallway_update()
 
-print char
-print studentOpp
-print coworkerOpp
 
-# chance_encounter = random.randint(1,100)
-# if 1 <= chance_encounter <= 100:
-# 	print 'Teacher {}! I have a quick question for you!'.format(char_name)
-# 	battle(char, studentOpp)
+chance_encounter = random.randint(1,100)
+if 1 <= chance_encounter <= 100:
+	print 'Teacher {}! I have a quick question for you!'.format(char_name)
+	battle(char, studentOpp)
