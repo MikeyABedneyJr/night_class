@@ -38,10 +38,18 @@ print '''The bell has run, classes have been dismissed, and
 you are ready for this week to be over. You eagerly
 open the door and take your first steps toward the exit...'''
 
-ge.hallway_update(char)
-
-
-chance_encounter = random.randint(1,100)
-if 1 <= chance_encounter <= 100:
-	print 'Teacher {}! I have a quick question for you!'.format(char_name)
-	ge.battle(char, studentOpp)
+while char.opponents_beaten < 10:
+	ge.hallway_update(char)
+	chance_encounter = random.randint(1,100)
+	if 1 <= chance_encounter <= 50:
+		print 'Teacher {}! I have a quick question for you...'.format(char_name)
+		ge.battle(char, studentOpp)
+	if 51 <= chance_encounter <=70:
+		print 'Excuse me, teacher {}? I need to talk to you about my child...'.format(char_name)
+		ge.battle(char, parentOpp)
+	if 71 <= chance_encounter <=90:
+		print 'Hey {}. Do you have a second?...'.format(char_name)
+		ge.battle(char, coworkerOpp)
+	if 91 <= chance_encounter <=100:
+		print "I've been looking for you {}. I need you to...".format(char_name)
+		ge.battle(char, adminOpp)

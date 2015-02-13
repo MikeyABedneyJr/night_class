@@ -28,7 +28,7 @@ def battle_menu(char):
   print '-'*75  
 
 def battle_success(char):
-  print"You have beaten your opponent!"
+  print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
   char.opponents_beaten += 1
   current_stats(char)
 
@@ -78,13 +78,36 @@ Here are the current stats for %s:
 
 And you have beaten %d opponents''' % (char.name, char.energy, char.patience, char.excuses, char.opponents_beaten)
 
+def defeat(char):
+  print '''
+  You have tried your best but cannot go further without rest.
+  After going into the fetal position for a few moments, you 
+  accidently fall asleep and wake up several hours later. There
+  is no use trying to get out, the doors have been locked long
+  ago. Picking yourself up slowly, you head back to your 
+  classroom to sleep under your desk.
+
+  GAME OVER'''
+  print '-'*75
+  print '-'*75
+  print '-'*75
+
 def hallway_update(char): #Called after each encounter with an opponent
   if char.opponents_beaten < 10:
     print '-'*75
     print "HALLWAY  {}".format(str(char.opponents_beaten  + 1))
     print '-'*75
   else:
-    print "YOU'VE ESCAPED! WOOOOHOOOOOOOO!!!"   
+    print '-'*75
+    print '''
+    YOU'VE ESCAPED! 
+    Go out and live your life!
+    The game starts over in a few short days....
+
+    GAME OVER'''
+    print '-'*75
+    print '-'*75
+    print '-'*75
 
 
 #Adding/removing stats for choice of what type of teacher
