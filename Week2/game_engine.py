@@ -1,24 +1,6 @@
 import random
 
-def begin(char):  #User chooses teacher subject
-  print '''What kind of teacher do you want to be?
-  1 = Math (++energy, -excuses)
-  2 = English (++patience, -excuses)
-  3 = Theater (+energy, +excuses)'''
-  print '-'*75
-  print '-'*75
-  class_choice = raw_input("Which subject will you chose?: ")
-  if class_choice == "1":
-    math(char)
-  elif class_choice == "2":
-    english(char)
-  elif class_choice == "3":
-    theater(char)
-  else:
-    print '-'*75
-    print "I didn't understand your choice. Try again"
-    print '-'*75
-    begin(char)
+import dungeon as main
 
 def battle_menu(char):
   print '''BATTLE MENU:
@@ -27,30 +9,25 @@ def battle_menu(char):
   3 = Make up an excuse to leave'''
   print '-'*75  
 
-def battle_success(char):
-  print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
-  char.opponents_beaten += 1
-  current_stats(char)
-
-def battle_failure(char, challenge):
-  print "Oh nooo!! It didn't work!!"
-  current_stats(char)
-  battle(char, challenge)
-
+#The entire battle sequence is in this block. It throws to other functions for specific conditions.
 def battle(char, challenge):
   print "How do you plan to bypass this {}?\n".format(challenge.name)
   battle_menu(char)
   battle_choice = raw_input("What will you do?:  "  )
-  if battle_choice == "1":    #Player tries to run
+  
+  # Player tries to run
+  if battle_choice == "1":    
     player_roll = random.randint(0,100)
     print player_roll
-    if player_roll <= challenge.energy:
+    if player_roll <= challenge.energy:   
       battle_success(char)
       char.energy -= 1
     if challenge.energy <= player_roll:
       char.energy -= 2
       battle_failure(char, challenge)
-  if battle_choice == "2":    #Player uses patience
+  
+  # Player uses patience
+  if battle_choice == "2":    
     player_roll = random.randint(0,100)
     print player_roll
     if player_roll <= challenge.patience:
@@ -59,7 +36,9 @@ def battle(char, challenge):
     if challenge.patience <= player_roll:
       char.patience -= 2
       battle_failure(char, challenge)
-  if battle_choice == "3":    #Player tries to make up an excuse
+
+  # Player tries to make up an excuse
+  if battle_choice == "3":    
     player_roll = random.randint(0,100)
     print player_roll
     if player_roll <= challenge.excuse_detection:
@@ -69,7 +48,25 @@ def battle(char, challenge):
       char.excuses -= 1
       battle_failure(char, challenge)
 
-def current_stats(char):  #Called when needing to display current teacher status
+  # Player doesn't type a 1, 2, or 3
+  else:
+    print "Please enter a number 1, 2, or 3"
+    battle(char, challenge)
+
+# User wins the fight
+def battle_failure(char, challenge):
+  print "Oh nooo!! It didn't work!!"
+  current_stats(char)
+  battle(char, challenge)
+
+# User loses the fight
+def battle_success(char):
+  print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
+  char.opponents_beaten += 1
+  current_stats(char)
+
+# Called when needing to display current teacher status
+def current_stats(char):  
   print '''
 Here are the current stats for %s:
   Energy: %d 
@@ -78,6 +75,7 @@ Here are the current stats for %s:
 
 And you have beaten %d opponents''' % (char.name, char.energy, char.patience, char.excuses, char.opponents_beaten)
 
+# Player loses entire game
 def defeat(char):
   print '''
   You have tried your best but cannot go further without rest.
@@ -92,7 +90,8 @@ def defeat(char):
   print '-'*75
   print '-'*75
 
-def hallway_update(char): #Called after each encounter with an opponent
+# Called after each encounter with an opponent
+def hallway_update(char): 
   if char.opponents_beaten < 10:
     print '-'*75
     print "HALLWAY  {}".format(str(char.opponents_beaten  + 1))
@@ -110,18 +109,3 @@ def hallway_update(char): #Called after each encounter with an opponent
     print '-'*75
 
 
-#Adding/removing stats for choice of what type of teacher
-def math(char):
-  char.energy += 4
-  char.excuses -= 2
-  print "You've chosen to be a math teacher..."
-
-def english(char):
-  char.patience += 4
-  char.excuses -= 2
-  print "You've chosen to be an english teacher..."
-
-def theater(char):
-  char.energy += 2
-  char.excuses += 2
-  print "You've chosen to be a theater teacher..."

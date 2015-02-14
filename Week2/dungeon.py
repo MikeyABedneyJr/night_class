@@ -1,5 +1,3 @@
-import random
-
 import game_engine as ge
 import dungeon_classes as dc
 
@@ -28,7 +26,7 @@ coworkerOpp = dc.Opponent("coworker", 90, 50, 50)
 adminOpp = dc.Opponent("administrator", 30, 30, 20)
 
 #Run function to choose teacher subject to modify attribute values
-ge.begin(char)
+dc.char.begin()
 
 #Show user updated stats after subject selection
 ge.current_stats(char)
@@ -40,7 +38,7 @@ open the door and take your first steps toward the exit...'''
 
 while char.opponents_beaten < 10:
 	ge.hallway_update(char)
-	chance_encounter = random.randint(1,100)
+	chance_encounter = ge.random.randint(1,100)
 	if 1 <= chance_encounter <= 50:
 		print 'Teacher {}! I have a quick question for you...'.format(char_name)
 		ge.battle(char, studentOpp)

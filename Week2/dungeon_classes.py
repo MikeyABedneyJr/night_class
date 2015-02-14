@@ -1,4 +1,6 @@
-#This builds your teacher stats to be modified throughout the game
+import dungeon as main
+
+# This builds your teacher stats to be modified throughout the game
 class Player(object):
   def __init__(self, name, energy, patience, excuses, opponents_beaten):
     self.name = name
@@ -16,6 +18,44 @@ You are Teacher %s and here are your stats:
     print '-'*75
     print '-'*75
 
+  # User chooses teacher subject
+  def begin(self):  
+    print '''What kind of teacher do you want to be?
+    1 = Math (++energy, -excuses)
+    2 = English (++patience, -excuses)
+    3 = Theater (+energy, +excuses)'''
+    print '-'*75
+    print '-'*75
+    class_choice = raw_input("Which subject will you chose?: ")
+    if class_choice == "1":
+      self.math(self)
+    elif class_choice == "2":
+      self.english(self)
+    elif class_choice == "3":
+      self.theater(self)
+    else:
+      print '-'*75
+      print "I didn't understand your choice. Try again"
+      print '-'*75
+      begin(self)
+
+  # Adding/removing stats for choice of what type of teacher
+  def math(self):
+    self.energy += 4
+    self.excuses -= 2
+    print "You've chosen to be a math teacher..."
+
+  def english(self):
+    self.patience += 4
+    self.excuses -= 2
+    print "You've chosen to be an english teacher..."
+
+  def theater(self):
+    self.energy += 2
+    self.excuses += 2
+    print "You've chosen to be a theater teacher..."
+
+# Class to build opponents
 class Opponent(object):
   def __init__(self, name, energy, patience, excuse_detection):
     self.name = name
