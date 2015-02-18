@@ -1,5 +1,3 @@
-import dungeon as main
-
 # This builds your teacher stats to be modified throughout the game
 class Player(object):
   def __init__(self, name, energy, patience, excuses, opponents_beaten):
@@ -19,7 +17,7 @@ You are Teacher %s and here are your stats:
     print '-'*75
 
   # User chooses teacher subject
-  def begin(self):  
+  def begin(self, hero):  
     print '''What kind of teacher do you want to be?
     1 = Math (++energy, -excuses)
     2 = English (++patience, -excuses)
@@ -28,32 +26,30 @@ You are Teacher %s and here are your stats:
     print '-'*75
     class_choice = raw_input("Which subject will you chose?: ")
     if class_choice == "1":
-      self.math(self)
+      math(hero)
     elif class_choice == "2":
-      self.english(self)
+      english(hero)
     elif class_choice == "3":
-      self.theater(self)
+      theater(hero)
     else:
       print '-'*75
       print "I didn't understand your choice. Try again"
       print '-'*75
-      begin(self)
+      begin()
 
-  # Adding/removing stats for choice of what type of teacher
-  def math(self):
-    self.energy += 4
-    self.excuses -= 2
-    print "You've chosen to be a math teacher..."
-
-  def english(self):
-    self.patience += 4
-    self.excuses -= 2
-    print "You've chosen to be an english teacher..."
-
-  def theater(self):
-    self.energy += 2
-    self.excuses += 2
-    print "You've chosen to be a theater teacher..."
+# Adding/removing stats for choice of what type of teacher
+def math(hero):
+  hero.energy += 4
+  hero.excuses -= 2
+  print "You've chosen to be a math teacher..."
+def english(hero):
+  hero.patience += 4
+  hero.excuses -= 2
+  print "You've chosen to be an english teacher..."
+def theater(hero):
+  hero.energy += 2
+  hero.excuses += 2
+  print "You've chosen to be a theater teacher..."
 
 # Class to build opponents
 class Opponent(object):
