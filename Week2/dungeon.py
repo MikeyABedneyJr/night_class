@@ -37,8 +37,8 @@ print '''The bell has run, classes have been dismissed, and
 you are ready for this week to be over. You eagerly
 open the door and take your first steps toward the exit...'''
 
-continue_game = False
-while continue_game != True:
+
+while hero.opponents_beaten <= 10:
 	ge.hallway_update(hero)
 	chance_encounter = ge.random.randint(1,100)
 	if 1 <= chance_encounter <= 50:
@@ -53,7 +53,3 @@ while continue_game != True:
 	if 91 <= chance_encounter <=100:
 		print "I've been looking for you {}. I need you to...".format(hero_name)
 		ge.battle(hero, adminOpp)
-
-
-# TODO: Test program---just made lots of changes with TRUE/FALSE statements and added
-#    winning function---see game_engine

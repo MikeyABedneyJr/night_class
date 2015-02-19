@@ -7,7 +7,7 @@ def battle_menu(hero):
   3 = Make up an excuse to leave'''
   print '-'*75  
 
-#The entire battle sequence is in this block. It throws to other functions for specific conditions.
+# The entire battle sequence is in this block. It throws to other functions for specific conditions.
 def battle(hero, challenge):
   print "How do you plan to bypass this {}?\n".format(challenge.name)
   battle_menu(hero)
@@ -45,10 +45,8 @@ def battle(hero, challenge):
     if challenge.excuse_detection <= player_roll:
       hero.excuses -= 1
       battle_failure(hero, challenge)
+  return hero.opponents_beaten
 
-  # This is a failsafe in case my loop never ends   <---------------delete when working
-  if battle_choice == "exit":
-    return False
   # Player doesn't type a 1, 2, or 3
   else:
     print "Please enter a number 1, 2, or 3"
@@ -58,7 +56,7 @@ def battle(hero, challenge):
 def battle_failure(hero, challenge):
   print "Oh nooo!! It didn't work!!"
   current_stats(hero)
-  if continue_game = False:
+  if hero.alive == False:
     defeat()
   else:
     battle(hero, challenge)
@@ -68,7 +66,7 @@ def battle_success(hero):
   print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
   hero.opponents_beaten += 1
   current_stats(hero)
-  if continue_game = False:
+  if hero.alive == False:
     player_wins()
 
 # Called when needing to display current teacher status
@@ -80,6 +78,10 @@ Here are the current stats for %s:
   Excuses: %d
 
 And you have beaten %d opponents''' % (hero.name, hero.energy, hero.patience, hero.excuses, hero.opponents_beaten)
+  if hero.energy <= 0 or hero.patience <= 0 or hero. excuses <= 0:
+    hero.alive == False
+    defeat(hero)
+    
 
 # Player loses entire game
 def defeat(hero):
@@ -87,7 +89,7 @@ def defeat(hero):
   You have tried your best but cannot go further without rest.
   After going into the fetal position for a few moments, you 
   accidently fall asleep and wake up several hours later. There
-  is no use trying to get out, the doors have been locked long
+  is no use trying to get out, the doors were locked long
   ago. Picking yourself up slowly, you head back to your 
   classroom to sleep under your desk.
 
@@ -98,7 +100,7 @@ def defeat(hero):
 
 # Called after each encounter with an opponent
 def hallway_update(hero): 
-  if continue_game = False:
+  if hero.alive == False:
     print '-'*75
     print "HALLWAY  {}".format(str(hero.opponents_beaten  + 1))
     print '-'*75

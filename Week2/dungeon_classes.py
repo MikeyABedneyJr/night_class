@@ -1,11 +1,12 @@
 # This builds your teacher stats to be modified throughout the game
 class Player(object):
-  def __init__(self, name, energy, patience, excuses, opponents_beaten):
+  def __init__(self, name, energy, patience, excuses, opponents_beaten, alive=True):
     self.name = name
     self.energy = energy
     self.patience = patience
     self.excuses = excuses
     self.opponents_beaten = opponents_beaten
+    self.alive = alive
 
   def description(self):
     print '''
