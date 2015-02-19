@@ -1,7 +1,21 @@
+# This is the main storyline of a game where your character is a teacher of a subject that you decide upon early
+#  in the game.  It is a Friday and you are trying to make your way through 10 hallways to escape the building. 
+#  Every hallway has a randomly generated opponent---student, parent, coworker, or administrator (main boss).
+#  The player has the option to run, listen patiently, or create an excuse to leave. Every opponent has varying
+#  percentages that each method will/won't work.  If any one of your three stats reaches 0, you lose and have to 
+#  sleep under your desk because the doors to the school have been locked.
+
+import os
+
 import game_engine as ge
 import dungeon_classes as dc
 
-# Beginning storyline
+# TODO: Test os.system('clear') command when needing to wipe screen. This will mean the displays may be off
+#           While loop below continues game till you've beaten 10 opponents EVEN AS DEFEAT MSG IS DISPLAYED
+
+# os.system('clear')
+
+# Beginning script of the game
 print '-'*75
 print '''
 You are a teacher at the end of a looong week.
@@ -14,23 +28,27 @@ do anyway...
 '''
 print '-'*75
 
-# User choses name that gets sent to Player() to create attributes
+# User choses name and a player instance is created. 
 hero_name = raw_input("What is your teacher/player's name?: ")
 hero = dc.Player(hero_name, 7, 7, 7, 0)
 hero.description()
 
+# Run function to choose teacher subject to modify attribute values
+hero.begin(hero)
 
 # Generate 4 types of opponents.  Stats are ordered as: energy, patience, excuse_detection
+# The number is the percentage of success. So you have a 40% chance of success running
+# from a student and a 20% chance of success using an excuse on an admin
 studentOpp = dc.Opponent("student", 40, 90, 80)
 parentOpp = dc.Opponent("parent", 20, 80, 60)
 coworkerOpp = dc.Opponent("coworker", 90, 50, 50)
 adminOpp = dc.Opponent("administrator", 30, 30, 20)
 
-# Run function to choose teacher subject to modify attribute values
-hero.begin(hero)
 
-# Show user updated stats after subject selection
+# User has chosen subject, this displays latest skills before the first part of the game begins
 ge.current_stats(hero)
+
+# Name and subject are chosen---the beginning of the adventure begins here!
 print '-'*75
 print '-'*75
 print '''The bell has run, classes have been dismissed, and
@@ -38,7 +56,8 @@ you are ready for this week to be over. You eagerly
 open the door and take your first steps toward the exit...'''
 
 
-while hero.opponents_beaten <= 10:
+
+while hero.opponents_beaten <= 10 and hero.alive == True:
 	ge.hallway_update(hero)
 	chance_encounter = ge.random.randint(1,100)
 	if 1 <= chance_encounter <= 50:

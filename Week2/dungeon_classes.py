@@ -1,3 +1,6 @@
+# This file only holds enough information to create an instance of the hero (Player class), a method to choose what
+# subject they want to teach (changes their attributes a little), and another class to make instances of opponents.
+
 # This builds your teacher stats to be modified throughout the game
 class Player(object):
   def __init__(self, name, energy, patience, excuses, opponents_beaten, alive=True):

@@ -1,5 +1,9 @@
+# This file holds all of the functions that run the game. Attacking, winning/losing individual fights, displaying
+# a menu for the users, and winning or losing the entire game are stored here.
+
 import random
 
+# Simple text to show what choices the user can make when fighting battles.
 def battle_menu(hero):
   print '''BATTLE MENU:
   1 = Run away
@@ -13,46 +17,46 @@ def battle(hero, challenge):
   battle_menu(hero)
   battle_choice = raw_input("What will you do?:  "  )
   
-  # Player tries to run
-  if battle_choice == "1":    
-    player_roll = random.randint(0,100)
-    print player_roll
-    if player_roll <= challenge.energy:   
-      battle_success(hero)
-      hero.energy -= 1
-    if challenge.energy <= player_roll:
-      hero.energy -= 2
-      battle_failure(hero, challenge)
-  
-  # Player uses patience
-  if battle_choice == "2":    
-    player_roll = random.randint(0,100)
-    print player_roll
-    if player_roll <= challenge.patience:
-      battle_success(hero)
-      hero.patience -= 1
-    if challenge.patience <= player_roll:
-      hero.patience -= 2
-      battle_failure(hero, challenge)
+  try:
+    # Player tries to run
+    if battle_choice == "1":    
+      player_roll = random.randint(0,100)
+      print player_roll
+      if player_roll <= challenge.energy:   
+        battle_success(hero)
+        hero.energy -= 1
+      if challenge.energy <= player_roll:
+        hero.energy -= 2
+        battle_failure(hero, challenge)
+    
+    # Player uses patience
+    if battle_choice == "2":    
+      player_roll = random.randint(0,100)
+      print player_roll
+      if player_roll <= challenge.patience:
+        battle_success(hero)
+        hero.patience -= 1
+      if challenge.patience <= player_roll:
+        hero.patience -= 2
+        battle_failure(hero, challenge)
 
-  # Player tries to make up an excuse
-  if battle_choice == "3":    
-    player_roll = random.randint(0,100)
-    print player_roll
-    if player_roll <= challenge.excuse_detection:
-      battle_success(hero)
-      hero.excuses -= 1
-    if challenge.excuse_detection <= player_roll:
-      hero.excuses -= 1
-      battle_failure(hero, challenge)
+    # Player tries to make up an excuse
+    if battle_choice == "3":    
+      player_roll = random.randint(0,100)
+      print player_roll
+      if player_roll <= challenge.excuse_detection:
+        battle_success(hero)
+        hero.excuses -= 1
+      if challenge.excuse_detection <= player_roll:
+        hero.excuses -= 1
+        battle_failure(hero, challenge)
 
-
-  # Player doesn't type a 1, 2, or 3
-  else:
+ # Player doesn't type a 1, 2, or 3
+  except:
     print "Please enter a number 1, 2, or 3"
     battle(hero, challenge)
 
-# User wins the fight
+# Called when user wins the fight
 def battle_failure(hero, challenge):
   print "Oh nooo!! It didn't work!!"
   current_stats(hero)
@@ -61,7 +65,7 @@ def battle_failure(hero, challenge):
   else:
     battle(hero, challenge)
 
-# User loses the fight
+# Called when user loses the fight
 def battle_success(hero):
   print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
   hero.opponents_beaten += 1
@@ -83,7 +87,7 @@ And you have beaten %d opponents''' % (hero.name, hero.energy, hero.patience, he
     defeat(hero)
 
 
-# Player loses entire game
+# Called when any one of the player attributes reaches zero
 def defeat(hero):
   print '''
   You have tried your best but cannot go further without rest.
@@ -105,6 +109,7 @@ def hallway_update(hero):
     print "HALLWAY  {}".format(str(hero.opponents_beaten  + 1))
     print '-'*75
 
+# Called when player has beaten 10 opponents and every attribute is more than zero
 def player_wins():
     print '-'*75
     print '''
