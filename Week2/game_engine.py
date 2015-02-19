@@ -45,7 +45,7 @@ def battle(hero, challenge):
     if challenge.excuse_detection <= player_roll:
       hero.excuses -= 1
       battle_failure(hero, challenge)
-  return hero.opponents_beaten
+
 
   # Player doesn't type a 1, 2, or 3
   else:
@@ -81,7 +81,7 @@ And you have beaten %d opponents''' % (hero.name, hero.energy, hero.patience, he
   if hero.energy <= 0 or hero.patience <= 0 or hero. excuses <= 0:
     hero.alive == False
     defeat(hero)
-    
+
 
 # Player loses entire game
 def defeat(hero):
