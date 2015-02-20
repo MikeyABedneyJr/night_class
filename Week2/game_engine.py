@@ -60,18 +60,21 @@ def battle(hero, challenge):
 def battle_failure(hero, challenge):
   print "Oh nooo!! It didn't work!!"
   current_stats(hero)
-  if hero.alive == False:
-    defeat()
-  else:
-    battle(hero, challenge)
+  battle(hero, challenge)
+  # if hero.alive == False:
+  #   defeat()
+  # else:
+  #   battle(hero, challenge)
 
 # Called when user loses the fight
 def battle_success(hero):
   print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
   hero.opponents_beaten += 1
   current_stats(hero)
-  if hero.alive == False:
-    player_wins()
+  # if hero.alive == False:
+  #   player_wins()
+
+
 
 # Called when needing to display current teacher status
 def current_stats(hero):  
@@ -82,9 +85,7 @@ Here are the current stats for %s:
   Excuses: %d
 
 And you have beaten %d opponents''' % (hero.name, hero.energy, hero.patience, hero.excuses, hero.opponents_beaten)
-  if hero.energy <= 0 or hero.patience <= 0 or hero. excuses <= 0:
-    hero.alive == False
-    defeat(hero)
+
 
 
 # Called when any one of the player attributes reaches zero
@@ -104,7 +105,6 @@ def defeat(hero):
 
 # Called after each encounter with an opponent
 def hallway_update(hero): 
-  if hero.alive == False:
     print '-'*75
     print "HALLWAY  {}".format(str(hero.opponents_beaten  + 1))
     print '-'*75

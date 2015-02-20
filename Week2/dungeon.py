@@ -15,6 +15,8 @@ import dungeon_classes as dc
 
 # os.system('clear')
 
+os.system('cls')
+
 # Beginning script of the game
 print '-'*75
 print '''
@@ -31,6 +33,7 @@ print '-'*75
 # User choses name and a player instance is created. 
 hero_name = raw_input("What is your teacher/player's name?: ")
 hero = dc.Player(hero_name, 7, 7, 7, 0)
+
 hero.description()
 
 # Run function to choose teacher subject to modify attribute values
@@ -57,18 +60,37 @@ open the door and take your first steps toward the exit...'''
 
 
 
-while hero.opponents_beaten <= 10 and hero.alive == True:
-	ge.hallway_update(hero)
-	chance_encounter = ge.random.randint(1,100)
-	if 1 <= chance_encounter <= 50:
-		print 'Teacher {}! I have a quick question for you...'.format(hero_name)
-		ge.battle(hero, studentOpp)
-	if 51 <= chance_encounter <=70:
-		print 'Excuse me, teacher {}? I need to talk to you about my child...'.format(hero_name)
-		ge.battle(hero, parentOpp)
-	if 71 <= chance_encounter <=90:
-		print 'Hey {}. Do you have a second?...'.format(hero_name)
-		ge.battle(hero, coworkerOpp)
-	if 91 <= chance_encounter <=100:
-		print "I've been looking for you {}. I need you to...".format(hero_name)
-		ge.battle(hero, adminOpp)
+def main():
+		# Check if the hero is alive or dead
+	def is_alive(hero):
+	# This looks at hero instance as dictionary, attr looks at attribute, val looks at values associated
+	# with it.  We only focus on checking val since it contains the integers for each attribute.
+	  for attr, val in hero.__dict__.iteritems():
+	  if val <= 0:
+	    ge.defeat(hero)
+	    return False
+	  if hero.opponents_beaten > 9:
+	    ge.player_wins(hero)
+	    return False
+
+	while True:
+		
+	  ge.hallway_update(hero)
+	  chance_encounter = ge.random.randint(1,100)
+	  if 1 <= chance_encounter <= 50:
+	    print 'Teacher {}! I have a quick question for you...'.format(hero_name)
+	    ge.battle(hero, studentOpp)
+	  if 51 <= chance_encounter <=70:
+	    print 'Excuse me, teacher {}? I need to talk to you about my child...'.format(hero_name)
+	    ge.battle(hero, parentOpp)
+		if 71 <= chance_encounter <=90:
+			print 'Hey {}. Do you have a second?...'.format(hero_name)
+			ge.battle(hero, coworkerOpp)
+		if 91 <= chance_encounter <=100:
+			print "I've been looking for you {}. I need you to...".format(hero_name)
+			ge.battle(hero, adminOpp)
+		if is_alive == False:
+			defeat(hero)
+			break
+
+main()
