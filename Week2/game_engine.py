@@ -2,6 +2,7 @@
 # a menu for the users, and winning or losing the entire game are stored here.
 
 import random
+import os
 
 # Simple text to show what choices the user can make when fighting battles.
 def battle_menu(hero):
@@ -21,44 +22,57 @@ def battle(hero, challenge):
     # Player tries to run
     if battle_choice == "1":    
       player_roll = random.randint(0,100)
-      print player_roll
       if player_roll <= challenge.energy:   
-        battle_success(hero)
         hero.energy -= 1
+        if hero.energy <= 0:
+          return(hero)
+        battle_success(hero)
       if challenge.energy <= player_roll:
         hero.energy -= 2
+        if hero.energy <= 0:
+          return(hero)
         battle_failure(hero, challenge)
     
     # Player uses patience
     if battle_choice == "2":    
       player_roll = random.randint(0,100)
-      print player_roll
       if player_roll <= challenge.patience:
-        battle_success(hero)
         hero.patience -= 1
+        if hero.patience <= 0:
+          return(hero)
+        battle_success(hero)
       if challenge.patience <= player_roll:
         hero.patience -= 2
+        if hero.patience <= 0:
+          return(hero)
         battle_failure(hero, challenge)
 
     # Player tries to make up an excuse
     if battle_choice == "3":    
       player_roll = random.randint(0,100)
-      print player_roll
       if player_roll <= challenge.excuse_detection:
-        battle_success(hero)
         hero.excuses -= 1
+        if hero.excuses <= 0:
+          return(hero)
+        battle_success(hero)
       if challenge.excuse_detection <= player_roll:
         hero.excuses -= 1
+        if hero.excuses <= 0:
+          return(hero)
         battle_failure(hero, challenge)
 
  # Player doesn't type a 1, 2, or 3
   except:
     print "Please enter a number 1, 2, or 3"
+    pause = raw_input("Press any key to continue...")
+    os.system('cls')
     battle(hero, challenge)
 
 # Called when user wins the fight
 def battle_failure(hero, challenge):
   print "Oh nooo!! It didn't work!!"
+  pause = raw_input("Press any key to continue...")
+  os.system('cls')
   current_stats(hero)
   battle(hero, challenge)
 
@@ -66,6 +80,8 @@ def battle_failure(hero, challenge):
 def battle_success(hero):
   print"YOU HAVE BEATEN YOUR OPPONENT!!!!"
   hero.opponents_beaten += 1
+  pause = raw_input("Press any key to continue...")
+  os.system('cls')
   current_stats(hero)
 
 
@@ -79,10 +95,8 @@ Here are the current stats for %s:
 
 And you have beaten %d opponents''' % (hero.name, hero.energy, hero.patience, hero.excuses, hero.opponents_beaten)
 
-
-
 # Called when any one of the player attributes reaches zero
-def defeat(hero):
+def defeat():
   print '''
   You have tried your best but cannot go further without rest.
   After going into the fetal position for a few moments, you 

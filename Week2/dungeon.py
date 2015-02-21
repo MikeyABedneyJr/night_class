@@ -33,7 +33,7 @@ print '-'*75
 # User choses name and a player instance is created. 
 hero_name = raw_input("What is your teacher/player's name?: ")
 hero = dc.Player(hero_name, 7, 7, 7, 0)
-
+os.system('cls')
 hero.description()
 
 # Run function to choose teacher subject to modify attribute values
@@ -52,14 +52,15 @@ adminOpp = dc.Opponent("administrator", 30, 30, 20)
 ge.current_stats(hero)
 
 # Name and subject are chosen---the beginning of the adventure begins here!
-print '-'*75
-print '-'*75
+os.system('cls')
 print '''The bell has run, classes have been dismissed, and
 you are ready for this week to be over. You eagerly
 open the door and take your first steps toward the exit...'''
-
-
-
+print '-'*75
+print '-'*75
+pause = raw_input("Press any button to continue...")
+os.system('cls')
+ge.current_stats(hero)
 def main():
 		# Check if the hero is alive or dead
 	def is_alive(hero):
@@ -67,9 +68,10 @@ def main():
 	  # with it.  We only focus on checking val since it contains the integers for each attribute.
 	  for attr, val in hero.__dict__.iteritems():
 	    if val <= 0:
-	      return False
-	  if hero.opponents_beaten > 9:
-	    ge.player_wins(hero)
+		ge.defeat()
+		return False
+	  if hero.opponents_beaten >= 10:
+	    ge.player_wins()
 	    return False
 
 	while True:
@@ -89,7 +91,6 @@ def main():
 			print "I've been looking for you {}. I need you to...".format(hero_name)
 			ge.battle(hero, adminOpp)
 		if is_alive(hero) == False:
-			ge.defeat(hero)
 			break
-
+		
 main()
